@@ -14,8 +14,10 @@ namespace forms_lotto
     public partial class Form1 : Form
     {
         Random rng = new();
+        Label[] label = new Label[6];
 
         int[] randomNum = new int[6];
+        int[] generatedNum = new int[6];
 
         public Form1()
         {
@@ -24,7 +26,14 @@ namespace forms_lotto
 
         private void GenerateRandomNum_Click(object sender, EventArgs e)
         {
-            for(int i = 0; i < 6; i++)
+            label[0] = DisplayNum1;
+            label[1] = DisplayNum2;
+            label[2] = DisplayNum3;
+            label[3] = DisplayNum4;
+            label[4] = DisplayNum5;
+            label[5] = DisplayNum6;
+
+            for (int i = 0; i < 6; i++)
             {
                 randomNum[i] = rng.Next(1, 50);
                 
@@ -33,15 +42,21 @@ namespace forms_lotto
                     if(i != 0 && randomNum[i] == randomNum[j])
                     {
                         i--;
+                        
                     }
                 }
             }
-            DisplayNum1.Text = Convert.ToString(randomNum[0]);
-            DisplayNum2.Text = Convert.ToString(randomNum[1]);
-            DisplayNum3.Text = Convert.ToString(randomNum[2]);
-            DisplayNum4.Text = Convert.ToString(randomNum[3]);
-            DisplayNum5.Text = Convert.ToString(randomNum[4]);
-            DisplayNum6.Text = Convert.ToString(randomNum[5]);
+
+            for(int i = 0; i < 6; i++)
+            {
+                generatedNum[i] = randomNum.Max();
+                randomNum[Array.IndexOf(randomNum, randomNum.Max())] = 0;
+            }
+
+            for(int i = 0; i < 6; i++)
+            {
+                label[i].Text = Convert.ToString(generatedNum[i]);
+            }
         }
     }
 }
